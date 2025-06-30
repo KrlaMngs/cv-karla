@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karla Calderón - CV Digital</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .hero-text h2 {
+      color: #e0ac1c;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .hero-text p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    .btn-custom {
+      background-color: #e0ac1c;
+      color: white;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: #d49a1b;
+      color: white;
+    }
+    .yellow-shape {
+      background-color: #e0ac1c;
+      border-top-left-radius: 200px;
+      border-bottom-left-radius: 200px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+    .yellow-shape img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    @media (max-width: 768px) {
+      .yellow-shape {
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md bg-light">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Karla Andrea Calderón Faican</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+        <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero section -->
+<div class="container-fluid hero">
+  <div class="row flex-wrap w-100">
+    <!-- Texto -->
+    <div class="col-md-6 d-flex flex-column justify-content-center p-5 hero-text">
+      <h2>ANÁLISIS DE DATOS</h2>
+      <h1>Hola, mi nombre es Karla Calderón</h1>
+      <p>Soy una persona apasionada por la tecnología y la innovación con estudios en Desarrollo de Software y Talento Humano.</p>
+      <div>
+        <a href="#proyectos" class="btn btn-custom me-2">Proyectos</a>
+        <a href="#" class="btn btn-outline-dark">LinkedIn</a>
+      </div>
+    </div>
+    <!-- Imagen sobre fondo amarillo -->
+    <div class="col-md-6 yellow-shape">
+      <img src="images/foto-karla.png" alt="Karla Calderón">
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
