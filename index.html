@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Karla Calderón - CV Digital</title>
@@ -54,12 +55,12 @@
       background-color: #e0ac1c;
     }
     .hero {
-      min-height: 80vh;
+      min-height: 20vh;
       display: flex;
       flex-wrap: wrap;
     }
     .hero-text {
-      margin-top: -30px; /* para subir un poco el texto */
+      margin-top: -30px;
     }
     .hero-text h2 {
       color: #e0ac1c;
@@ -86,25 +87,29 @@
       background: url('images/mancha.png') no-repeat center center;
       background-size: contain;
       width: 100%;
-      height: 950px;
+      height: 600px;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
     }
     .profile-img {
-      width: 90%;
-      height: 90%;
+      width: 98%;
+      height: 98%;
       object-fit: cover;
       object-position: top center;
       border-radius: 50%;
       border: none;
       box-shadow: none;
       transition: transform 0.3s ease;
+      outline: none;
     }
-    .profile-img:hover {
-      transform: scale(1.05);
-    }
+    .profile-img:hover,
+.profile-img.mirando {
+  transform: scale(1.20);
+  box-shadow: none;
+}
+
     .yellow-shape {
       background-color: #e0ac1c;
       border-top-left-radius: 200px;
@@ -162,9 +167,62 @@
         border-radius: 0;
       }
     }
+
+    /*Efecto cuando el usuario está mirando un elemento */
+    .mirando {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(224, 172, 28, 0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 1000;
+    }
+    .tracking-controls {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.tracking-btn {
+  font-family: 'Nunito', sans-serif;
+  background-color: #fcd34d; /* amarillo suave */
+  color: #1f2937; /* gris oscuro casi negro */
+  border: none;
+  padding: 10px 18px;
+  margin: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tracking-btn:hover {
+  background-color: #facc15; /* amarillo más fuerte */
+  transform: translateY(-2px);
+}
+
+.tracking-btn.stop {
+  background-color: #e11d48; /* rojo suave */
+  color: white;
+}
+
+.tracking-btn.stop:hover {
+  background-color: #be123c; /* rojo más oscuro */
+}
+
+.tracking-btn.download {
+  background-color: #4b5563; /* gris oscuro */
+  color: white;
+}
+
+.tracking-btn.download:hover {
+  background-color: #374151; /* más oscuro */
+}
+
   </style>
 </head>
 <body>
+
+<!--Contenedor del Heatmap -->
+<div id="heatmapContainer" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999;"></div>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-md bg-light">
@@ -175,7 +233,7 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navMenu">
       <ul class="navbar-nav">
-	<li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="sobre-mi.html">Sobre mí</a></li>
         <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
       </ul>
@@ -183,11 +241,19 @@
   </div>
 </nav>
 
+<!-- Controles -->
+<div id="tracking-controls" style="margin-top: 10px; text-align: center;">
+  <button onclick="startTracking()" class="tracking-btn">Iniciar Seguimiento</button>
+  <button onclick="stopTracking()" class="tracking-btn stop">Detener Seguimiento</button>
+  <button onclick="downloadGazeData()" class="tracking-btn download">Descargar Datos</button>
+</div>
+
+<canvas id="heatmapCanvas" style="position: absolute; top: 0; left: 0; z-index: 10; pointer-events: none;"></canvas>
+
 <main>
-  <!-- Hero section -->
+  <!-- Hero -->
   <div class="container-fluid hero">
     <div class="row flex-wrap w-100">
-      <!-- Texto -->
       <div class="col-md-6 d-flex flex-column justify-content-center p-5 hero-text">
         <h2>PORTAFOLIO PROFESIONAL</h2>
         <h1>Hola, mi nombre es Karla Calderón</h1>
@@ -197,7 +263,6 @@
           <a href="https://www.linkedin.com/in/karla-calderón" target="_blank" class="btn btn-outline-dark">LinkedIn</a>
         </div>
       </div>
-      <!-- Imagen sobre mancha -->
       <div class="col-md-6 text-center">
         <div class="paint-splash">
           <img src="images/foto-karla.png" alt="Karla Calderón" class="profile-img">
@@ -210,10 +275,10 @@
   <section id="contacto" class="contacto">
     <h2>Contacto</h2>
     <div class="social-icons mt-3">
-      <a href="https://www.instagram.com/TU_USUARIO/" target="_blank" aria-label="Instagram">
+      <a href="https://www.instagram.com/USUARIO/" target="_blank" aria-label="Instagram">
         <img src="images/instagram.png" alt="Instagram" class="icon">
       </a>
-      <a href="https://wa.me/TU_NUMERO" target="_blank" aria-label="WhatsApp">
+      <a href="https://wa.me/NUMERO" target="_blank" aria-label="WhatsApp">
         <img src="images/whatsapp.png" alt="WhatsApp" class="icon">
       </a>
       <a href="https://www.linkedin.com/in/karla-calderón" target="_blank" aria-label="LinkedIn">
@@ -229,6 +294,158 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.5/heatmap.min.js"></script>
+
+  <script>
+    let heatmap;
+    let gazeData = [];
+
+    function initHeatmap() {
+  const heatmapContainer = document.getElementById("heatmapContainer");
+  if (!heatmapContainer) {
+    console.error("Contenedor de heatmap no encontrado");
+    return;
+  }
+
+  heatmap = h337.create({
+    container: heatmapContainer,
+    radius: 40,
+    maxOpacity: 0.6,
+    minOpacity: 0.1,
+    blur: 0.9
+  });
+  console.log("Heatmap inicializado.");
+}
+function updateHeatmap(x, y) {
+  if (heatmap) {
+    heatmap.addData({ x: x, y: y, value: 1 });
+  }
+}
+    function startTracking() {
+      document.getElementById("heatmapContainer").style.display = "none";
+      gazeData = [];
+
+      const elementosInteractivos = [
+        document.querySelector('.profile-img'),
+        document.querySelector('.btn-custom'),
+        document.querySelector('.btn-outline-dark'),
+        ...document.querySelectorAll('.icon')
+      ];
+
+      webgazer.setGazeListener((data, elapsedTime) => {
+        if (data) {
+          gazeData.push({ x: data.x, y: data.y, value: 1 });
+
+          elementosInteractivos.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const dentro = data.x >= rect.left && data.x <= rect.right &&
+                          data.y >= rect.top && data.y <= rect.bottom;
+
+            if (dentro) {
+              el.classList.add("mirando");
+            } else {
+              el.classList.remove("mirando");
+            }
+          });
+        }
+      }).begin();
+
+      console.log("Seguimiento iniciado.");
+    }
+
+function stopTracking() {
+  try {
+    // Detener WebGazer
+    webgazer.pause();
+    webgazer.clearGazeListener();
+
+
+        // Apagar la cámara
+    const video = document.querySelector('video');
+    if (video && video.srcObject) {
+      const tracks = video.srcObject.getTracks();
+      tracks.forEach(track => track.stop()); // Detiene cada flujo de la cámara
+      video.srcObject = null;
+    }
+    // Eliminar los overlays de WebGazer
+const overlays = document.querySelectorAll("canvas, video");
+overlays.forEach(el => {
+  if (el && el.parentNode && el.id !== "heatmapContainer") {
+    el.parentNode.removeChild(el);
+  }
+});
+
+    // Mostrar heatmap si está listo
+    if (heatmap && gazeData.length > 0) {
+      document.getElementById("heatmapContainer").style.display = "block";
+
+      heatmap.setData({
+        max: 5,
+        data: gazeData
+      });
+    } else {
+      console.warn("Heatmap no inicializado o sin datos.");
+    }
+    
+// Espera a que el heatmap se renderice antes de capturarlo como imagen
+setTimeout(() => {
+  const heatmapCanvas = document.querySelector("#heatmapContainer canvas");
+  if (heatmapCanvas) {
+    const imageURL = heatmapCanvas.toDataURL("image/jpeg", 1.0);
+
+    // Abrir en nueva pestaña
+    const newTab = window.open();
+    if (newTab) {
+      newTab.document.write(`<img src="${imageURL}" alt="Mapa de calor">`);
+    } else {
+      console.warn("No se pudo abrir una nueva pestaña. Asegúrate de permitir pop-ups.");
+    }
+
+    // Descargar automáticamente la imagen
+    const downloadLink = document.createElement("a");
+    downloadLink.href = imageURL;
+    downloadLink.download = "heatmap.jpg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    console.log("Mapa de calor mostrado y descargado.");
+  } else {
+    console.warn("No se encontró el canvas del heatmap para generar la imagen.");
+  }
+}, 500); // Espera medio segundo para asegurar que se renderice el heatmap
+
+    // Restaurar el estilo y limpiar clases
+    document.body.style.pointerEvents = 'auto';
+    document.querySelectorAll('.mirando').forEach(el => el.classList.remove('mirando'));
+
+    // Eliminar el punto rojo del seguimiento
+    const gazeDot = document.getElementById("webgazerGazeDot");
+    if (gazeDot && gazeDot.parentNode) {
+      gazeDot.parentNode.removeChild(gazeDot);
+    }
+
+    console.log("Seguimiento y cámara detenidos correctamente");
+  } catch (error) {
+    console.error("Error al detener el seguimiento:", error);
+  }
+     
+}
+
+    function downloadGazeData() {
+      const blob = new Blob([JSON.stringify(gazeData, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "datos_gaze.json";
+      link.click();
+    }
+
+    window.onload = function () {
+      initHeatmap();
+    }
+    
+  </script>
+
 </body>
 </html>
-
